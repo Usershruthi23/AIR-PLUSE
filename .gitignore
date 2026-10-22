@@ -1,0 +1,36 @@
+
+# Node.js dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Frontend build output
+client/dist/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+client/.env
+client/.env.*
+server/.env
+server/.env.*
+python_service/.env
+python_service/.env.*
+
+# Python virtual environment and cache
+python_service/.venv/
+python_service/venv/
+python_service/__pycache__/
+**/__pycache__/
+*.pyc
+
+# Local database files
+server/data/*.sqlite
+server/data/*.sqlite3
+server/data/*.db
+
+# Generated files
+.vercel/
+coverage/
+*.log
