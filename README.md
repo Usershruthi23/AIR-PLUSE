@@ -1,100 +1,419 @@
-# AirPulse+ — AI/ML Full-Stack Academic Prototype
+# AirPulse+ — Contactless Vital Sign Detection Through Wi-Fi Signals
 
-**Project theme:** Contactless vital-sign estimation research concept using WiFi Channel State Information (CSI).
+**A software-based prototype for simulated vital-sign monitoring, signal visualization, pose demonstrations, and alert management.**
 
-## Important scientific limitation
-This deliverable is a **software simulation / academic demonstration**. It does **not** access a WiFi adapter, collect actual CSI packets, estimate real human vital signs, or detect real falls. Heart rate, breathing rate, CSI-like arrays, model scores, confidence values, and alerts are simulated. The AI/ML module uses a transparent heuristic scoring model over synthetic features, not a trained clinical model. Do not use this system for diagnosis, emergency response, or real patient monitoring.
+<p align="center">
+  <img src="https://img.shields.io/badge/Project-Academic%20Prototype-blue" alt="Academic Prototype" />
+  <img src="https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB" alt="React and Vite" />
+  <img src="https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-green" alt="Node.js and Express" />
+  <img src="https://img.shields.io/badge/Python-FastAPI-009688" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/Mode-Simulation%20Only-orange" alt="Simulation Only" />
+</p>
 
-## Architecture
-- **React + Vite dashboard** (`client/`) — interactive dashboard, people, poses, signal lab, alerts.
-- **Node.js + Express API** (`server/`) — REST API, validation, SQLite persistence, and integration with Python service.
-- **Python + FastAPI signal/ML service** (`python_service/`) — synthetic CSI-like signal generation, signal-processing features (mean, standard deviation, energy, zero-crossing rate), and explainable heuristic risk score.
-- **SQLite** — local demo data storage. Cloud database is optional and not required.
+## 🌐 Live Demo
 
-## Requirements
-- Node.js 20 LTS recommended (18+ may work)
-- npm
-- Python 3.10+ (3.11 recommended)
-- Internet connection for installing dependencies and loading Chart.js CDN in browser
+- **Frontend:** https://health-monitoring-five-psi.vercel.app/
+- **Node.js Backend API:** https://air-pluse-1.onrender.com
+- **Node.js Health Check:** https://air-pluse-1.onrender.com/api/health
+- **Python Signal Service:** https://air-pluse.onrender.com
+- **Python Health Check:** https://air-pluse.onrender.com/health
+- **GitHub Repository:** https://github.com/Usershruthi23/AIR-PLUSE
 
-## Run on Windows / VS Code
-Use **two terminals** (three if you want to start the Python service separately).
+## 📌 Project Overview
 
-### 1) Install JavaScript dependencies
-From the project root:
+AirPulse+ is an academic software prototype inspired by the concept of contactless vital-sign monitoring using Wi-Fi signal variations.
+
+The project demonstrates how a monitoring platform could organize simulated heart-rate readings, breathing-rate information, signal visualizations, pose states, and alert events in a unified dashboard.
+
+The application combines a React-based frontend, a Node.js REST API, and a Python FastAPI service that generates synthetic signal data. Users can select demo people, run different scenarios, view illustrative signal waveforms, and inspect simulated alerts and reading history.
+
+**Important:** The current implementation is a software-only simulation. It does not actually detect people, measure heart rates, capture breathing, or detect falls using physical Wi-Fi hardware. Displayed readings and signal visualizations are simulated and must not be used for medical decisions.
+
+## 🎯 Problem Statement
+
+Conventional vital-sign monitoring often relies on wearable devices or physical sensors. Contactless Wi-Fi sensing is an area of research that explores whether changes in wireless channel characteristics can reveal movement and physiological activity.
+
+Understanding such systems requires a way to visualize signal changes, demonstrate monitoring workflows, and examine possible alert scenarios.
+
+AirPulse+ provides an interactive software demonstration of these concepts without requiring specialized sensing hardware.
+
+## 💡 Proposed Solution
+
+AirPulse+ provides a web-based monitoring dashboard with the following capabilities:
+
+- Simulated vital-sign readings for multiple demo people.
+- Interactive human-pose illustrations.
+- Synthetic signal generation and waveform visualization.
+- Normal, irregular, inactivity, and fall demonstration scenarios.
+- Simulated alert generation and acknowledgement.
+- Reading history and monitoring summaries.
+- REST API communication between the frontend and backend services.
+- Cloud deployment for accessing the demonstration through a browser.
+
+## ✨ Key Features
+
+### 1. Interactive Dashboard
+
+The dashboard presents monitoring summaries, demo-person information, vital-sign cards, alert information, and illustrative charts.
+
+### 2. People and Pose Visualization
+
+The application includes a visual human figure with interactive pose states, including:
+
+- Standing
+- Sitting
+- Lying
+- Fallen
+
+The illustrations demonstrate interface behavior; they are not generated from a real camera, sensor, or Wi-Fi-based pose-estimation system.
+
+### 3. Signal Lab
+
+The Signal Lab displays synthetic signal waveforms for demonstrating how signal patterns may vary across selected scenarios.
+
+These charts are illustrative outputs, not measurements captured from a physical wireless channel.
+
+### 4. Scenario Simulation
+
+The system supports demonstration scenarios such as:
+
+| Scenario | Purpose |
+|---|---|
+| Normal | Demonstrates an ordinary simulated reading |
+| Irregular | Demonstrates a simulated irregular-pattern scenario |
+| Inactivity | Demonstrates an inactivity-related monitoring scenario |
+| Fall | Demonstrates a simulated fall event and associated alert workflow |
+
+Exact readings and outcomes depend on the implemented simulation logic.
+
+### 5. Alert Management
+
+The application includes an alert interface for viewing simulated events. The backend provides an endpoint for acknowledging alerts.
+
+### 6. Reading History
+
+The history interface allows users to inspect simulated monitoring records generated by the application.
+
+### 7. Cloud Deployment
+
+The frontend and backend services are hosted separately, allowing the application to be accessed without running the entire system on the user's computer.
+
+## 🏗️ System Architecture
+
+```text
+                    USER / WEB BROWSER
+                            |
+                            v
+              React + Vite Frontend
+                 Hosted on Vercel
+                            |
+                            | HTTPS / REST API
+                            v
+                Node.js + Express API
+                 Hosted on Render
+                   /             \
+                  /               \
+                 v                 v
+       People, Alerts,        Python Signal
+       History, Simulation    Analysis Service
+                               FastAPI
+                              Hosted on Render
+                                    |
+                                    v
+                          Synthetic Signal Data
+                                    |
+                                    v
+                         Simulated Reading Results
+```
+
+### Architecture Components
+
+**Frontend — React + Vite**
+- Displays the dashboard and interactive views.
+- Allows users to select people and simulation scenarios.
+- Displays charts, pose illustrations, alerts, and history.
+- Communicates with the Node.js API over HTTP.
+
+**Backend — Node.js + Express**
+- Provides REST API endpoints.
+- Supplies demo-person and alert information.
+- Handles simulation requests.
+- Exposes history and alert-management operations.
+- Communicates with the Python service.
+
+**Signal Service — Python + FastAPI**
+- Generates synthetic signal samples.
+- Supports demonstration scenarios and pose states.
+- Provides a health endpoint and an analysis endpoint.
+- Returns simulated analysis results.
+
+## 🛠️ Technology Stack
+
+| Layer | Technologies |
+|---|---|
+| Frontend | React, Vite, JavaScript, HTML, CSS |
+| Backend | Node.js, Express.js |
+| Signal service | Python, FastAPI |
+| Communication | HTTP, REST API, JSON |
+| Visualization | Dashboard charts and synthetic signal waveforms |
+| Frontend hosting | Vercel |
+| Backend hosting | Render |
+| Version control | Git and GitHub |
+
+## 📂 Project Structure
+
+The main application is organized into three services:
+
+```text
+AIR-PLUSE/
+├── client/
+│   └── React + Vite frontend
+├── server/
+│   └── Node.js + Express backend
+├── python_service/
+│   └── Python + FastAPI signal service
+├── README.md
+└── package.json
+```
+
+The frontend, Node.js API, and Python service each have their own dependencies and configuration. Additional files, environment files, and source modules are maintained inside their respective directories.
+
+## ⚙️ Local Installation and Setup
+
+### Prerequisites
+
+Install the following software:
+
+- Node.js and npm
+- Python 3
+- Git
+- A code editor such as Visual Studio Code
+
+### Step 1: Clone the repository
+
 ```bash
-npm install
+git clone https://github.com/Usershruthi23/AIR-PLUSE.git
+cd AIR-PLUSE
+```
+
+### Step 2: Install dependencies
+
+From the project root, run:
+
+```bash
 npm run install:all
 ```
 
-### 2) Create Python environment and install FastAPI
-From the project root:
+This project script installs the root, server, and client npm dependencies.
+
+Install the Python service dependencies using its requirements file, if provided:
+
 ```bash
 cd python_service
-py -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
+cd ..
 ```
-If `py` is unavailable, try `python -m venv .venv`.
 
-### 3) Start Python signal service
-In the activated `python_service` terminal:
-```bash
-uvicorn app:app --reload --host 127.0.0.1 --port 8000
+If the Python service uses a different dependency file, follow that file's instructions instead.
+
+### Step 3: Configure environment variables
+
+Configure the frontend API URL in the client environment, for example in `client/.env.local`:
+
+```env
+VITE_API_BASE_URL=http://localhost:4000
 ```
-API docs: http://127.0.0.1:8000/docs
 
-### 4) Start Node API
-Open a second terminal at project root:
-```bash
-npm run start
+Configure the Node.js service to use the locally running Python service:
+
+```env
+PYTHON_SERVICE_URL=http://localhost:8000
 ```
-Node API: http://localhost:4000/api/health
 
-### 5) Start React dashboard
-Open a third terminal at project root:
+These are example local development values. Use the actual port and environment-variable names expected by the source code.
+
+Keep secret values out of GitHub. Do not commit private keys, credentials, or production secrets.
+
+### Step 4: Start the Python service
+
+Open a terminal in the `python_service` directory.
+
+Start the FastAPI application using the module and application name defined by the project. For example, if its entry file is `main.py` and the FastAPI object is named `app`:
+
 ```bash
-npm run dev --prefix client
+python -m uvicorn main:app --reload --port 8000
 ```
-Open **http://localhost:5173**.
 
-### Optional: start Node + React together
-After Python is running, use this in a separate terminal instead of steps 4 and 5:
+If the entry file or application object has a different name, adjust the command accordingly.
+
+Verify the service at:
+
+```text
+http://127.0.0.1:8000/health
+```
+
+### Step 5: Start the Node.js backend
+
+Open a second terminal:
+
 ```bash
+cd server
+npm run
+```
+
+Check the available scripts, then run the appropriate development or start script listed in `server/package.json`.
+
+Verify the API health endpoint using the backend's configured port. The deployed API currently uses port `4000` in the documented local setup.
+
+### Step 6: Start the React frontend
+
+Open a third terminal:
+
+```bash
+cd client
 npm run dev
 ```
-The root script starts Node and React together; the Python service still needs to be running separately.
 
-## Demo flow
-1. Open the dashboard and select a demo person.
-2. Choose a scenario such as Normal, Irregular Pattern, Inactivity, or Fall Simulation.
-3. Click **Run simulation**.
-4. Observe the generated simulated readings, risk score, synthetic signal chart, and any demo alert.
-5. Open Alerts to acknowledge an alert.
-6. Use Reset demo to restore the seed people and clear alert/history records.
+Open the local Vite URL displayed in the terminal, usually:
 
-## REST endpoints (Node API on port 4000)
-- `GET /api/health`
-- `GET /api/people`
-- `GET /api/people/:id`
-- `GET /api/alerts`
-- `GET /api/history?personId=P001`
-- `POST /api/simulate` JSON: `{"personId":"P001","scenario":"normal","pose":"standing"}`
-- `POST /api/alerts/:id/acknowledge`
-- `POST /api/reset`
+```text
+http://localhost:5173
+```
 
-Python service:
-- `GET /health`
-- `POST /analyze` JSON: `{"scenario":"normal","pose":"standing","personId":"P001"}`
+Ensure that the frontend API URL points to the Node.js backend and that the backend's Python service URL points to the running FastAPI service.
 
-## TensorFlow / PyTorch note
-TensorFlow and PyTorch are intentionally **not required** to run this demo. The Python service shows the signal-processing and explainable ML-style pipeline with deterministic heuristics so it runs on a typical student laptop without a model download. You can later replace `score_risk()` in `python_service/app.py` with a trained TensorFlow/PyTorch model after collecting ethically sourced, validated data. Do not describe the heuristic as a trained neural network.
+## 🔌 API Endpoints
 
-## Raspberry Pi / ESP32 / real CSI (optional future work)
-These are not required. Real CSI capture requires compatible WiFi hardware, firmware/driver support, lawful/ethical data collection, calibration, and validated signal-processing methods. This project does not include hardware capture drivers.
+The deployed Node.js service exposes the following API routes:
 
-## Troubleshooting
-- **Port in use:** close the other process or change the port in `server/server.js`, `client/vite.config.js`, or the uvicorn command.
-- **Python command not found:** install Python 3.10+ and enable PATH, then reopen VS Code.
-- **Python analysis unavailable:** ensure FastAPI is running at `http://127.0.0.1:8000`. Node returns a clearly labeled fallback simulated analysis if it cannot reach Python.
-- **Blank frontend:** check the Vite terminal and open http://localhost:5173 directly.
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/health` | Checks Node.js API health |
+| GET | `/api/people` | Retrieves demo people |
+| GET | `/api/people/:id` | Retrieves a specific demo person |
+| GET | `/api/alerts` | Retrieves alerts |
+| GET | `/api/history` | Retrieves reading history |
+| POST | `/api/simulate` | Runs a simulation |
+| POST | `/api/alerts/:id/acknowledge` | Acknowledges an alert |
+| POST | `/api/reset` | Resets simulated application state, as implemented |
+
+The Python FastAPI service provides:
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/health` | Checks Python service health |
+| POST | `/analyze` | Processes the synthetic signal simulation |
+
+Actual request fields and response formats are defined by the corresponding route handlers in the source code.
+
+## 🧪 Testing and Verification
+
+The following manual tests have been completed on the deployed application.
+
+| Test | Result |
+|---|---|
+| Frontend loads successfully | Passed |
+| Node.js API health check | Passed |
+| Python service health check | Passed |
+| Production environment configuration | Verified |
+| Browser/API simulation test | Passed |
+| Run Simulation updates readings | Passed |
+| Interactive pose illustration | Tested |
+| Normal scenario | Tested |
+| Fall scenario and alert workflow | Tested |
+| Alerts and history interfaces | Tested |
+
+These results reflect manual testing of the deployed demonstration. They do not constitute clinical validation, hardware validation, or proof of actual Wi-Fi sensing accuracy.
+
+## 🚀 Deployment
+
+### Frontend — Vercel
+
+Production URL:
+
+https://health-monitoring-five-psi.vercel.app/
+
+Configure the frontend environment variable:
+
+```env
+VITE_API_BASE_URL=https://air-pluse-1.onrender.com
+```
+
+Redeploy the frontend if the production environment configuration changes.
+
+### Node.js Backend — Render
+
+Production URL:
+
+https://air-pluse-1.onrender.com
+
+Health check:
+
+https://air-pluse-1.onrender.com/api/health
+
+Configure the Python service URL:
+
+```env
+PYTHON_SERVICE_URL=https://air-pluse.onrender.com
+```
+
+### Python Signal Service — Render
+
+Production URL:
+
+https://air-pluse.onrender.com
+
+Health check:
+
+https://air-pluse.onrender.com/health
+
+After deploying changes, verify that both services report healthy status and that the frontend can successfully complete a simulation.
+
+## 🔒 Safety, Privacy, and Limitations
+
+AirPulse+ is a software-only academic prototype with the following limitations:
+
+1. **No real Wi-Fi sensing:** The current implementation does not collect or process live wireless channel measurements from physical hardware.
+2. **Simulated vital signs:** Heart-rate and breathing-rate values are generated for demonstration and are not real physiological measurements.
+3. **Simulated fall events:** Fall scenarios are generated by the application logic and are not actual fall detection.
+4. **Illustrative signal charts:** The waveform visualizations represent synthetic data, not captured CSI measurements.
+5. **Not a medical device:** The application is not intended for diagnosis, treatment, emergency response, or clinical monitoring.
+6. **No guaranteed real-time accuracy:** Simulation outputs cannot establish accuracy, sensitivity, specificity, or clinical reliability.
+
+A future hardware-enabled research implementation would require suitable Wi-Fi sensing equipment or supported CSI capture, signal-processing algorithms, validation datasets, and rigorous testing.
+
+## 🔮 Future Enhancements
+
+Potential future work includes:
+
+- Integration with compatible hardware for collecting actual Wi-Fi channel-state information.
+- Signal-processing algorithms for extracting motion and breathing-related patterns.
+- Evaluation of heart-rate estimation feasibility using suitable sensing methods.
+- Machine-learning models trained and validated on appropriate datasets.
+- Improved event detection and configurable alert thresholds.
+- More detailed historical charts and exportable reports.
+- Authentication, authorization, and role-based access controls.
+- Automated API tests and continuous integration.
+- Evaluation of reliability, privacy, and performance under different environmental conditions.
+
+These are proposed enhancements and should not be interpreted as capabilities already implemented.
+
+## 🎓 Academic Project Information
+
+**Project Title:** AirPulse: Contactless Vital Sign Detection Through Wi-Fi Signals
+
+**Project Type:** Software-based academic prototype
+
+**Primary Objective:** Demonstrate a web-based workflow for simulated vital-sign monitoring, synthetic signal visualization, pose demonstrations, and alert management.
+
+**Implementation:** React, Node.js, Express, Python, FastAPI, and cloud hosting.
+
+## 👩‍💻 Author and Repository
+
+**GitHub:** https://github.com/Usershruthi23/AIR-PLUSE
+
+Contributions, suggestions, and academic feedback are welcome.
+
+## 📄 License
+
+No license has been specified for this repository. Unless a license is added, the project should not be assumed to be available for unrestricted reuse or redistribution.
